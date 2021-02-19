@@ -12,10 +12,13 @@ repositories {
     jcenter()
     maven("https://dl.bintray.com/mipt-npm/dataforge")
     maven("https://dl.bintray.com/mipt-npm/kscience")
+    maven("https://dl.bintray.com/mipt-npm/dev")
 }
 
 dependencies {
-    implementation("kscience.plotlykt:plotlykt-server:0.3.0")
+    api("kscience.kmath:kmath-core:0.2.0-dev-5")
+    api("kscience.kmath:kmath-core-jvm:0.2.0-dev-5")
+   // implementation("kscience.plotlykt:plotlykt-server:0.3.0")
     testImplementation(kotlin("test-testng"))
 }
 
@@ -24,5 +27,5 @@ tasks.test {
 }
 
 tasks.withType<KotlinCompile>() {
-    kotlinOptions.jvmTarget = "1.8"
+    kotlinOptions.jvmTarget = "11"
 }
