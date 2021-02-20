@@ -10,7 +10,6 @@ fun formSequenceVector(f: (Double) -> Double, amount: Int): List<Double> {
     val results = mutableListOf<Double>()
     for (i in 0 until amount) {
         val x = i * 2 * PI / amount
-      //  val x =   (i.toDouble()  / amount);
         results.add(f(x))
     }
     return results
