@@ -6,7 +6,7 @@ import kscience.kmath.operations.r
 import kotlin.math.PI
 
 
-fun formSequenceVector(f: (Double) -> Double, amount: Int): List<Double> {
+fun formSequenceVector(amount: Int, f: (Double) -> Double): List<Double> {
     val results = mutableListOf<Double>()
     for (i in 0 until amount) {
         val x = i * 2 * PI / amount
