@@ -21,7 +21,6 @@ fun generateMatrix(size: Int): Array<Array<Complex>> {
     for (i in 0 until size) {
         for (j in 0 until size) {
             var complex = Complex(0, -1)
-            var pow=(-1) * 2 * PI * i * j / size;
             complex = ComplexField.multiply(complex,  2 * PI * i * j / size)
             matrix[i][j] = kscience.kmath.operations.exp(complex)
         }
