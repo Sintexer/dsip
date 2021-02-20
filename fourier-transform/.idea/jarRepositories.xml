@@ -36,5 +36,10 @@
       <option name="name" value="maven3" />
       <option name="url" value="https://dl.bintray.com/mipt-npm/dev" />
     </remote-repository>
+    <remote-repository>
+      <option name="id" value="maven4" />
+      <option name="name" value="maven4" />
+      <option name="url" value="https://jetbrains.bintray.com/lets-plot-maven" />
+    </remote-repository>
   </component>
 </project>
