@@ -7,10 +7,10 @@ version = "1.0-SNAPSHOT"
 repositories {
     mavenCentral()
     jcenter()
-    maven{url "https://dl.bintray.com/mipt-npm/dataforge"}
-    maven{url "https://dl.bintray.com/mipt-npm/kscience"}
-    maven{url "https://dl.bintray.com/mipt-npm/dev"}
-    maven{url "https://jetbrains.bintray.com/lets-plot-maven"}
+    maven { url "https://dl.bintray.com/mipt-npm/dataforge" }
+    maven { url "https://dl.bintray.com/mipt-npm/kscience" }
+    maven { url "https://dl.bintray.com/mipt-npm/dev" }
+    maven { url "https://jetbrains.bintray.com/lets-plot-maven" }
 }
 
 dependencies {
