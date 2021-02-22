@@ -22,7 +22,7 @@ fun generateMatrix(size: Int): Array<Array<Complex>> {
         for (j in 0 until size) {
             var complex = Complex(0, -1)
             complex = ComplexField.multiply(complex,  2 * PI * i * j / size)
-            matrix[i][j] = kscience.kmath.operations.exp(complex)
+           matrix[i][j] = kscience.kmath.operations.exp(complex)
         }
     }
     return matrix
