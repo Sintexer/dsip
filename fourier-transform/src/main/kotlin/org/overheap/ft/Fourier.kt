@@ -6,11 +6,6 @@ import kscience.kmath.operations.r
 import kotlin.math.PI
 
 fun formSequenceVector(amount: Int, f: (Double) -> Double): List<Double> {
-//    val results = mutableListOf<Double>()
-//    for (i in 0 until amount) {
-//        val x = i * 2 * PI / amount
-//        results.add(f(x))
-//    }
     val pow = 2 * PI / amount
     return (0 until amount).map { f(it * pow) }
 }
@@ -30,15 +25,6 @@ fun generateMatrix(size: Int): Array<Array<Complex>> {
 
 
 fun createFrequencies(sequence: List<Double>, matrix: Array<Array<Complex>>, size: Int): List<Double> {
-//    val result = mutableListOf<Double>()
-//    for (i in 0 until size) {
-//        val resultCell = sequence
-//            .zip(matrix[i])
-//            .map { pair -> pair.second * pair.first }
-//            .fold(Complex(0, 0), ComplexField::add)
-//            .r
-//        result.add(resultCell)
-//    }
     return (0 until size).map{i ->
         sequence.zip(matrix[i])
             .map { pair -> pair.second * pair.first }

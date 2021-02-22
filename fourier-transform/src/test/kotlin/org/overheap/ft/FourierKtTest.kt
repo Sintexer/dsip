@@ -74,45 +74,42 @@ class FourierKtTest {
                     arrayOf(Complex(1, 0), Complex(0, 1), Complex(-1, 0), Complex(0, -1))
                 )
             ),
-            arrayOf(
-                8, arrayOf(
-                    arrayOf(Complex(1, 0), Complex(1, 0), Complex(1, 0), Complex(1, 0),
-                            Complex(1, 0), Complex(1, 0), Complex(1, 0), Complex(1, 0)),
-                    arrayOf(Complex(1, 0), Complex(cos45, -cos45), Complex(0, -1), Complex(-cos45, -cos45),
-                        Complex(-1, 0), Complex(-cos45, cos45), Complex( 0, 1), Complex(cos45, cos45)),
-
-                    //start from this
-                    arrayOf(Complex(1, 0), Complex(-1, 0), Complex(1, 0), Complex(-1, 0),
-                        Complex(1, 0), Complex(0, 1), Complex(1, 0), Complex(-1, 0)),
-                    arrayOf(Complex(1, 0), Complex(0, 1), Complex(-1, 0), Complex(0, -1),
-                        Complex(1, 0), Complex(0, -1), Complex(-1, 0), Complex(0, -1)),
-                    arrayOf(Complex(1, 0), Complex(1, 0), Complex(1, 0), Complex(1, 0),
-                        Complex(1, 0), Complex(1, 0), Complex(1, 0), Complex(1, 0)),
-                    arrayOf(Complex(1, 0), Complex(0, -1), Complex(0, -1), Complex(0, -1),
-                        Complex(1, 0), Complex(0, -1), Complex(-1, 0), Complex(0, -1)),
-                    arrayOf(Complex(1, 0), Complex(-1, 0), Complex(1, 0), Complex(-1, 0),
-                        Complex(1, 0), Complex(-1, 0), Complex(1, 0), Complex(-1, 0)),
-                    arrayOf(Complex(1, 0), Complex(0, 1), Complex(-1, 0), Complex(0, -1),
-                        Complex(1, 0), Complex(0, -1), Complex(-1, 0), Complex(0, -1))
-                )
-            )
         )
     }
 
     @Test(dataProvider = "matrix")
     fun testGenerateMatrix(amount: Int, expected: Array<Array<Complex>>) {
-        val matrix= generateMatrix(amount)
+        val matrix = generateMatrix(amount)
         for (i in 0 until amount) {
             for (j in 0 until amount) {
-                println(i)
-                println(j)
                 assertEquals(matrix[i][j].re, expected[i][j].re, DELTA)
                 assertEquals(matrix[i][j].im, expected[i][j].im, DELTA)
             }
         }
     }
 
-    @Test
-    fun testCreateFrequencies() {
+    @DataProvider(name = "frequencies")
+    fun frequencies(): Array<Array<Any>> {
+        return arrayOf(
+            arrayOf(
+                4, arrayOf(
+                    arrayOf(Complex(1, 0), Complex(1, 0), Complex(1, 0), Complex(1, 0)),
+                    arrayOf(Complex(1, 0), Complex(0, -1), Complex(-1, 0), Complex(0, 1)),
+                    arrayOf(Complex(1, 0), Complex(-1, 0), Complex(1, 0), Complex(-1, 0)),
+                    arrayOf(Complex(1, 0), Complex(0, 1), Complex(-1, 0), Complex(0, -1))
+                ),
+                listOf(1.0, 0.0, -1.0, 0.0),
+                doubleArrayOf(0.0, 2.0, 0.0, 2.0)
+            ),
+        )
+    }
+
+    @Test(dataProvider = "frequencies")
+    fun testCreateFrequencies(size: Int, matrix: Array<Array<Complex>>, sequence: List<Double>, expected: DoubleArray) {
+        assertEquals(
+            createFrequencies(sequence, matrix, size).toDoubleArray(),
+            expected,
+            DELTA
+        )
     }
 }
