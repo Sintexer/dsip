@@ -25,11 +25,14 @@ fun generateMatrix(size: Int): Array<Array<Complex>> {
 
 
 fun createFrequencies(sequence: List<Double>, matrix: Array<Array<Complex>>, size: Int): List<Double> {
+    return createComplexFrequencies(sequence, matrix, size).map { it.r }
+}
+
+fun createComplexFrequencies(sequence: List<Double>, matrix: Array<Array<Complex>>, size: Int): List<Complex> {
     return (0 until size).map{i ->
         sequence.zip(matrix[i])
             .map { pair -> pair.second * pair.first }
             .fold(Complex(0, 0), ComplexField::add)
-            .r
     }
 }
 
