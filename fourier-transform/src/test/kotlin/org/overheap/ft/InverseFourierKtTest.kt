@@ -1,5 +1,6 @@
 package org.overheap.ft
 
+import org.testng.Assert.assertEquals
 import org.testng.annotations.Test
 import kotlin.math.cos
 import kotlin.math.sin
@@ -14,13 +15,12 @@ class InverseFourierKtTest {
 
         val DELTA = 0.0001
         val frequencies = createSpectrum(vector, generateMatrix(amount), amount)
-        println(frequencies )
-        val source = listOf<Double>()
-        val matrix = generateInverseMatrix(amount)
-        println(createSourceValues(frequencies, matrix, amount))
 
-//        assertEquals(createSourceValues(frequencies, matrix, amount).toDoubleArray(),
-//        vector.toDoubleArray(), DELTA)
+        val matrix = generateInverseMatrix(amount)
+        assertEquals(
+            createSourceValues(frequencies, matrix, amount).toDoubleArray(),
+            vector.toDoubleArray(), DELTA
+        )
     }
 
 }
