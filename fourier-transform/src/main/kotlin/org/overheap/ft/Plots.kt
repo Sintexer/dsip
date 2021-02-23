@@ -25,14 +25,6 @@ fun <T, N> createPlot(x: Iterable<T>, y: Iterable<N>): Plot {
     return createPlot(data)
 }
 
-fun <T> createPlot(values: List<T>, f: (T) -> Double): Plot {
-    val data = mapOf(
-        "x" to values,
-        "y" to values.map(f)
-    )
-    return createPlot(data)
-}
-
 fun createBunch(plots: List<Plot>): GGBunch {
     return GGBunch().also {
         plots.forEachIndexed { i, plot ->

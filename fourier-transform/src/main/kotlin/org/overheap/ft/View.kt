@@ -12,7 +12,7 @@ fun createHtml(function: (Double) -> Double): String {
     val complexFrequencies = formDftFrequencies(precision, function)
 
     val plots = listOf(
-        createPlot(values, function) +
+        createPlot(values, values.map(function)) +
                 labs(title = "Source", x = "t", y = "F(t)"),
         createPlot(points, inverseDft(complexFrequencies)) +
                 labs(title = "Inverse Dft", x = "t", y = "F(t)"),
