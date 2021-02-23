@@ -107,7 +107,7 @@ class FourierKtTest {
     @Test(dataProvider = "frequencies")
     fun testCreateFrequencies(size: Int, matrix: Array<Array<Complex>>, sequence: List<Double>, expected: DoubleArray) {
         assertEquals(
-            createFrequencies(sequence, matrix, size).toDoubleArray(),
+            createAmplitudes(sequence, matrix, size).toDoubleArray(),
             expected,
             DELTA
         )

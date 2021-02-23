@@ -64,6 +64,6 @@ fun getPoints(): List<Double> {
     //vector - axis X
     val vector= formSequenceVector(amount){x-> cos(2*x)+sin(5*x)}
     val matrix=generateMatrix(amount)
-    return createFrequencies(vector, matrix, amount)
+    return createAmplitudes(vector, matrix, amount)
 
 }
