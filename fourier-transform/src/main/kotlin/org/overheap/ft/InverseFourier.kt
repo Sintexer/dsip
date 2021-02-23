@@ -2,6 +2,7 @@ package org.overheap.ft
 
 import kscience.kmath.operations.Complex
 import kscience.kmath.operations.ComplexField
+import kscience.kmath.operations.r
 import kotlin.math.PI
 
 fun generateInverseMatrix(size: Int): Array<Array<Complex>> {
@@ -17,7 +18,11 @@ fun generateInverseMatrix(size: Int): Array<Array<Complex>> {
     return matrix
 }
 
-fun createSourceValues(frequencies: List<Double>, matrix: Array<Array<Complex>>, size: Int): List<Double> {
-  //  val l=createFrequencies(frequencies, matrix, size)
-    return createFrequencies(frequencies, matrix, size).map{it/size}
+fun createSourceValues(frequencies: List<Complex>, matrix: Array<Array<Complex>>, size: Int): List<Double> {
+    return (0 until size).map{i ->
+        frequencies.zip(matrix[i])
+            .map { pair -> pair.second * pair.first }
+            .fold(Complex(0, 0), ComplexField::add)
+            .r/size
+    }
 }
