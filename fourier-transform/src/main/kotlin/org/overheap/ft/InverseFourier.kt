@@ -23,6 +23,6 @@ fun createSourceValues(frequencies: List<Complex>, matrix: Array<Array<Complex>>
         frequencies.zip(matrix[i])
             .map { pair -> pair.second * pair.first }
             .fold(Complex(0, 0), ComplexField::add)
-            .r/size
+            .re/size
     }
 }

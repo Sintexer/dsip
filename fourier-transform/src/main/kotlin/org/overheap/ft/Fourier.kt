@@ -36,5 +36,6 @@ fun createComplexFrequencies(sequence: List<Double>, matrix: Array<Array<Complex
     }
 }
 
+fun Iterable<Complex>.modular() = this.map{it.r}
 
 
