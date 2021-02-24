@@ -1,5 +1,6 @@
 package org.overheap.ft
 
+
 import org.testng.Assert.assertEquals
 import org.testng.annotations.Test
 import kotlin.math.cos
@@ -10,16 +11,19 @@ class InverseFourierKtTest {
 
     @Test
     fun testCreateSourceValues() {
-        val amount = 32
-        val vector = formSequenceVector(amount) { x -> cos(2 * x) + sin(5 * x) }
+        val amount=32
+        val orig= formValueSequence(amount){ x-> cos(2*x)+sin(5*x)}
+        val dft= dft(amount){ x-> cos(2*x)+sin(5*x)}
 
         val DELTA = 0.0001
-        val frequencies = createSpectrum(vector, generateMatrix(amount), amount)
+        val matrix = createInverseDftMatrix(amount)
 
-        val matrix = generateInverseMatrix(amount)
+        println(orig)
+        println(createSourceValues(dft, matrix))
+
         assertEquals(
-            createSourceValues(frequencies, matrix, amount).toDoubleArray(),
-            vector.toDoubleArray(), DELTA
+            createSourceValues(dft, matrix).toDoubleArray(),
+            orig.toDoubleArray(), DELTA
         )
     }
 

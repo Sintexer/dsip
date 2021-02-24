@@ -31,7 +31,7 @@ class FourierKtTest {
 
     @Test(dataProvider = "vectors")
     fun testFormSequenceVector1(amount: Int, f: (Double) -> Double, expected: List<Double>) {
-        val vector = formSequenceVector(amount, f)
+        val vector = formValueSequence(amount, f)
         val pairList = vector.zip(expected)
         assertTrue(pairList.all { (el1, el2) -> abs(el1 - el2) <= DELTA })
     }
@@ -56,7 +56,7 @@ class FourierKtTest {
     @Test(dataProvider = "valuesData")
     fun testFormSequenceVector(times: Int, f: (Double) -> Double, expected: DoubleArray) {
         assertEquals(
-            formSequenceVector(times, f).toDoubleArray(),
+            formValueSequence(times, f).toDoubleArray(),
             expected,
             DELTA
         )
@@ -79,7 +79,7 @@ class FourierKtTest {
 
     @Test(dataProvider = "matrix")
     fun testGenerateMatrix(amount: Int, expected: Array<Array<Complex>>) {
-        val matrix = generateMatrix(amount)
+        val matrix = createDftMatrix(amount)
         for (i in 0 until amount) {
             for (j in 0 until amount) {
                 assertEquals(matrix[i][j].re, expected[i][j].re, DELTA)
@@ -105,11 +105,12 @@ class FourierKtTest {
     }
 
     @Test(dataProvider = "frequencies")
-    fun testCreateFrequencies(size: Int, matrix: Array<Array<Complex>>, sequence: List<Double>, expected: DoubleArray) {
+    fun testCreateFrequencies(size: Int, matrix: List<List<Complex>>, sequence: List<Double>, expected: DoubleArray) {
         assertEquals(
-            createAmplitudes(sequence, matrix, size).toDoubleArray(),
+            createAmplitudes(sequence, matrix).toDoubleArray(),
             expected,
             DELTA
         )
     }
+
 }
