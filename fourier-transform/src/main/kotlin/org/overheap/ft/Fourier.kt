@@ -32,8 +32,11 @@ private fun createMatrix(size: Int, base: Complex): List<List<Complex>> {
     }
 }
 
-fun createComplexFrequencies(sequence: List<Double>, matrix: List<List<Complex>>): List<Complex> {
-    return (sequence.indices).map { i ->
+fun createComplexFrequencies(sequence: List<Double>, matrix: List<List<Complex>>) =
+    multiply(sequence.map{Complex(it, 0)}, matrix)
+
+fun multiply(sequence: List<Complex>, matrix: List<List<Complex>>): List<Complex> {
+    return (matrix.indices).map{i ->
         sequence.zip(matrix[i])
             .map { pair -> pair.second * pair.first }
             .fold(Complex(0, 0), ComplexField::add)
