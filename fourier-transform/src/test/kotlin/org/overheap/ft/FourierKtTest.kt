@@ -1,6 +1,7 @@
 package org.overheap.ft
 
 import kscience.kmath.operations.Complex
+import kscience.kmath.operations.theta
 import org.testng.Assert.assertEquals
 import org.testng.annotations.DataProvider
 
@@ -92,7 +93,7 @@ class FourierKtTest {
     fun frequencies(): Array<Array<Any>> {
         return arrayOf(
             arrayOf(
-                4, arrayOf(
+                 arrayOf(
                     arrayOf(Complex(1, 0), Complex(1, 0), Complex(1, 0), Complex(1, 0)),
                     arrayOf(Complex(1, 0), Complex(0, -1), Complex(-1, 0), Complex(0, 1)),
                     arrayOf(Complex(1, 0), Complex(-1, 0), Complex(1, 0), Complex(-1, 0)),
@@ -105,12 +106,29 @@ class FourierKtTest {
     }
 
     @Test(dataProvider = "frequencies")
-    fun testCreateFrequencies(size: Int, matrix: List<List<Complex>>, sequence: List<Double>, expected: DoubleArray) {
+    fun testCreateAmplitudes(matrix: List<List<Complex>>, sequence: List<Double>, expected: DoubleArray) {
         assertEquals(
             createAmplitudes(sequence, matrix).toDoubleArray(),
             expected,
             DELTA
         )
     }
+
+    @Test
+    fun testCreatePhases () {
+        val amount=32
+        val values = formValueSequence(amount){x->cos(2*x)+sin(5*x)}
+        val matrix = createDftMatrix(amount)
+        val expected= doubleArrayOf(0.0, 0.0, 0.0, 0.0, 0.0, -1.57, 0.0, 0.0, 0.0, 0.0,
+            0.0, 0.0, 0.0, 0.0, 0.0,0.0, 0.0, 0.0, 0.0, 0.0,0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,-1.57, 0.0, 0.0, 0.0, 0.0)
+        assertEquals(
+            createPhases(values, matrix).toDoubleArray(),
+            expected,
+            DELTA
+        )
+
+    }
+
+
 
 }

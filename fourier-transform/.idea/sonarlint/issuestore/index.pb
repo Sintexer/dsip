@@ -21,3 +21,7 @@ g
 7src/test/kotlin/org/overheap/ft/InverseFourierKtTest.kt,9\1\91e6d2d372e6df513f8f3ddf0724cbecd01c72f3
 ^
 .src/main/kotlin/org/overheap/ft/FastFourier.kt,5\9\59eaeb99e12f83a86df473cc7c1399c7cc4a7a5f
+W
+'src/main/kotlin/org/overheap/ft/View.kt,4\b\4b1899cf19d23602f02311ba09c8788301859bfe
+X
+(src/main/kotlin/org/overheap/ft/Plots.kt,6\8\681927a3e600310447259b333ff65e591c918b6c

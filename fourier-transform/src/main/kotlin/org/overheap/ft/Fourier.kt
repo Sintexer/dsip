@@ -19,7 +19,7 @@ fun createAmplitudes(sequence: List<Double>, matrix: List<List<Complex>>): List<
 }
 
 fun createPhases(sequence: List<Double>, matrix: List<List<Complex>>): List<Double> {
-    return createComplexDft(sequence, matrix).map { it.theta }
+    return createComplexDft(sequence, matrix).map { Complex(it.re, it.im.toInt().toDouble()).theta }
 }
 
 
