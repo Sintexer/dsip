@@ -14,11 +14,11 @@ fun formDftFrequencies(amount: Int, f: (Double) -> Double): List<Complex> {
 
 fun inverseDft(frequencies: List<Complex>): List<Double> {
     val matrix = createInverseDftMatrix(frequencies.size)
-    return createSourceValues(frequencies, matrix, frequencies.size).also { println(it) }
+    return multiply(frequencies, matrix).real().map { it / frequencies.size }
 }
 
 fun formValueSequence(amount: Int, f: (Double) -> Double) =
-    (0 until amount).map { f(it*2*PI/amount) }
+    (0 until amount).map { f(it * 2 * PI / amount) }
 
 fun createDftMatrix(size: Int) = createMatrix(size, Complex(0, -1))
 
@@ -34,10 +34,10 @@ private fun createMatrix(size: Int, base: Complex): List<List<Complex>> {
 }
 
 fun createComplexFrequencies(sequence: List<Double>, matrix: List<List<Complex>>) =
-    multiply(sequence.map{Complex(it, 0)}, matrix)
+    multiply(sequence.map { Complex(it, 0) }, matrix)
 
 fun multiply(sequence: List<Complex>, matrix: List<List<Complex>>): List<Complex> {
-    return (matrix.indices).map{i ->
+    return (matrix.indices).map { i ->
         sequence.zip(matrix[i])
             .map { pair -> pair.second * pair.first }
             .fold(Complex(0, 0), ComplexField::add)
@@ -45,5 +45,6 @@ fun multiply(sequence: List<Complex>, matrix: List<List<Complex>>): List<Complex
 }
 
 fun Iterable<Complex>.modular() = this.map { it.r }
+fun Iterable<Complex>.real() = this.map { it.re }
 
 
