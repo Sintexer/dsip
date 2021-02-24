@@ -15,13 +15,15 @@ import jetbrains.letsPlot.lets_plot
 import kotlin.math.cos
 import kotlin.math.sin
 
+fun Iterable<*>.println() = println(joinToString(prefix = "[", postfix = "]"))
+
 fun main() {
     embeddedServer(Netty, port = 8080) {
         routing {
             get("/") {
                 call.respond(
                     TextContent(
-                        createPlotsPage(256) { x ->
+                        createPlotsPage(32) { x ->
                             cos(2 * x) + sin(5 * x)
                         },
                         ContentType.Text.Html
