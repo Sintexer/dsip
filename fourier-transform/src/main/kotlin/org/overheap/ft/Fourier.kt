@@ -51,8 +51,9 @@ fun multiply(sequence: List<Complex>, matrix: List<List<Complex>>): List<Complex
 }
 
 fun Iterable<Complex>.modular() = this.map { it.r }
+fun Iterable<Complex>.theta() = this.map { it.theta }
 fun Iterable<Complex>.real() = this.map { it.re }
-
+fun Iterable<Double>.toComplex() = this.map{Complex(it, 0)}
 
 
 
