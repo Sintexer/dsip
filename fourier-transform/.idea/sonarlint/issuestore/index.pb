@@ -19,3 +19,5 @@ a
 1src/main/kotlin/org/overheap/ft/InverseFourier.kt,9\d\9dba66b7e7a7dea5381c3074405004f4e7b0f4f8
 g
 7src/test/kotlin/org/overheap/ft/InverseFourierKtTest.kt,9\1\91e6d2d372e6df513f8f3ddf0724cbecd01c72f3
+^
+.src/main/kotlin/org/overheap/ft/FastFourier.kt,5\9\59eaeb99e12f83a86df473cc7c1399c7cc4a7a5f

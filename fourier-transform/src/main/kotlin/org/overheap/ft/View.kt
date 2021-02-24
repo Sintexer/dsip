@@ -7,7 +7,7 @@ import java.io.File
 fun createPlotsPage(precision: Int, function: (Double) -> Double): String {
     val points = (0 until precision)
     val values = formValueSequence(precision) { it }.also{println(it)}//TODO think about name
-    val complexFrequencies = formDftFrequencies(precision, function)
+    val complexFrequencies = dft(precision, function)
 
     val plots = listOf(
         createPlot(values, values.map(function)) +

@@ -5,11 +5,15 @@ import kscience.kmath.operations.ComplexField
 import kscience.kmath.operations.r
 import kotlin.math.PI
 
-//fun createSourceValues(frequencies: List<Complex>, matrix: List<List<Complex>>, size: Int): List<Double> {
-//    return (0 until size).map{i ->
-//        frequencies.zip(matrix[i])
-//            .map { pair -> pair.second * pair.first }
-//            .fold(Complex(0, 0), ComplexField::add)
-//            .re/size
-//    }
-//}
+
+fun createSourceValues(amplitudes: List<Complex>, matrix: List<List<Complex>>)=
+    multiply(amplitudes, matrix).map { it.re/amplitudes.size }
+
+
+fun createInverseDftMatrix(size: Int) = createMatrix(size, Complex(0, 1))
+
+fun inverseDft(frequencies: List<Complex>): List<Double> {
+    val matrix = createInverseDftMatrix(frequencies.size)
+    return multiply(frequencies, matrix).real().map { it / frequencies.size }
+}
+
