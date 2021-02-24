@@ -13,6 +13,7 @@ fun dft(amount: Int, f: (Double) -> Double): List<Complex> {
     return createComplexDft(values, matrix)
 }
 
+
 fun createAmplitudes(sequence: List<Double>, matrix: List<List<Complex>>): List<Double> {
     return createComplexDft(sequence, matrix).map { it.r }
 }
@@ -23,6 +24,7 @@ fun createPhases(sequence: List<Double>, matrix: List<List<Complex>>): List<Doub
 
 
 fun formValueSequence(amount: Int, f: (Double) -> Double) = (0 until amount).map { f(it*2*PI/amount) }
+
 
 fun createDftMatrix(size: Int) = createMatrix(size, Complex(0, -1))
 
@@ -35,11 +37,13 @@ fun createMatrix(size: Int, base: Complex): List<List<Complex>> {
     }
 }
 
+
 fun createComplexDft(sequence: List<Double>, matrix: List<List<Complex>>) =
     multiply(sequence.map{Complex(it, 0)}, matrix)
 
+
 fun multiply(sequence: List<Complex>, matrix: List<List<Complex>>): List<Complex> {
-    return (sequence.indices).map { i ->
+    return (matrix.indices).map { i ->
         sequence.zip(matrix[i])
             .map { pair -> pair.second * pair.first }
             .fold(Complex(0, 0), ComplexField::add)
@@ -47,6 +51,7 @@ fun multiply(sequence: List<Complex>, matrix: List<List<Complex>>): List<Complex
 }
 
 fun Iterable<Complex>.modular() = this.map { it.r }
+fun Iterable<Complex>.real() = this.map { it.re }
 
 
 

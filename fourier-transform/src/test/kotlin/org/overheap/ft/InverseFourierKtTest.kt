@@ -8,7 +8,6 @@ import kotlin.math.sin
 
 class InverseFourierKtTest {
 
-
     @Test
     fun testCreateSourceValues() {
         val amount=32
@@ -18,8 +17,6 @@ class InverseFourierKtTest {
         val DELTA = 0.0001
         val matrix = createInverseDftMatrix(amount)
 
-        println(orig)
-        println(createSourceValues(dft, matrix))
 
         assertEquals(
             createSourceValues(dft, matrix).toDoubleArray(),
