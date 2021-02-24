@@ -17,7 +17,8 @@ fun inverseDft(frequencies: List<Complex>): List<Double> {
     return createSourceValues(frequencies, matrix, frequencies.size).also { println(it) }
 }
 
-fun formValueSequence(amount: Int, f: (Double) -> Double) = (0 until amount).map { f(it*2*PI/amount) }
+fun formValueSequence(amount: Int, f: (Double) -> Double) =
+    (0 until amount).map { f(it*2*PI/amount) }
 
 fun createDftMatrix(size: Int) = createMatrix(size, Complex(0, -1))
 

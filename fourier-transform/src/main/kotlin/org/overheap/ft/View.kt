@@ -4,9 +4,7 @@ import jetbrains.letsPlot.export.ggsave
 import jetbrains.letsPlot.label.labs
 import java.io.File
 
-fun createHtml(function: (Double) -> Double): String {
-    val precision = 32
-
+fun createPlotsPage(precision: Int, function: (Double) -> Double): String {
     val points = (0 until precision)
     val values = formValueSequence(precision) { it }.also{println(it)}//TODO think about name
     val complexFrequencies = formDftFrequencies(precision, function)

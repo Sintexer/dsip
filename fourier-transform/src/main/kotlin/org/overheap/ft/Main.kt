@@ -16,7 +16,7 @@ fun main() {
             get("/") {
                 call.respond(
                     TextContent(
-                        createHtml() { x ->
+                        createPlotsPage(256) { x ->
                             cos(2 * x) + sin(5 * x)
                         },
                         ContentType.Text.Html
