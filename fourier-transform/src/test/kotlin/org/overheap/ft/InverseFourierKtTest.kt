@@ -12,7 +12,7 @@ class InverseFourierKtTest {
     fun testCreateSourceValues() {
         val amount=32
         val orig= formValueSequence(amount){ x-> cos(2*x)+sin(5*x)}
-        val dft= dft(amount){ x-> cos(2*x)+sin(5*x)}
+        val dft= FT.dft(amount){ x-> cos(2*x)+sin(5*x)}
 
         val DELTA = 0.0001
         val matrix = createInverseDftMatrix(amount)
