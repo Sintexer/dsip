@@ -27,12 +27,13 @@ fun createConvolutionVector(amount: Int, f: (Double) -> Double):List<Double> {
 }
 
 fun createConvolutionResult(matrix:List<List<Double>>, vector: List<Double>):List<Double> {
-    val amount=vector.size
+    return multiply(matrix, vector).map { it/vector.size }
+}
+
+fun multiply(matrix:List<List<Double>>, vector: List<Double>):List<Double> {
     return (matrix.indices).map { i ->
         vector.zip(matrix[i])
             .map { pair -> pair.second * pair.first }
             .fold(0.0, Double::plus)
-            .div(amount)
-
     }
 }
