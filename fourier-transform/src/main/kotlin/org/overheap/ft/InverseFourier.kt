@@ -7,13 +7,13 @@ import kotlin.math.PI
 
 
 fun createSourceValues(amplitudes: List<Complex>, matrix: List<List<Complex>>)=
-    multiply(amplitudes, matrix).map { it.re/amplitudes.size }
+    FT.multiply(amplitudes, matrix).map { it.re/amplitudes.size }
 
 
-fun createInverseDftMatrix(size: Int) = createMatrix(size, Complex(0, 1))
+fun createInverseDftMatrix(size: Int) = FT.createMatrix(size, Complex(0, 1))
 
 fun inverseDft(frequencies: List<Complex>): List<Double> {
     val matrix = createInverseDftMatrix(frequencies.size)
-    return multiply(frequencies, matrix).real().map { it / frequencies.size }
+    return FT.multiply(frequencies, matrix).real().map { it / frequencies.size }
 }
 

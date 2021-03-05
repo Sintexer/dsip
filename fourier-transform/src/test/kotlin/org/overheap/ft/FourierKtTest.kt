@@ -80,7 +80,7 @@ class FourierKtTest {
 
     @Test(dataProvider = "matrix")
     fun testGenerateMatrix(amount: Int, expected: Array<Array<Complex>>) {
-        val matrix = createDftMatrix(amount)
+        val matrix = FT.createDftMatrix(amount)
         for (i in 0 until amount) {
             for (j in 0 until amount) {
                 assertEquals(matrix[i][j].re, expected[i][j].re, DELTA)
@@ -108,7 +108,7 @@ class FourierKtTest {
     @Test(dataProvider = "frequencies")
     fun testCreateAmplitudes(matrix: List<List<Complex>>, sequence: List<Double>, expected: DoubleArray) {
         assertEquals(
-            createAmplitudes(sequence, matrix).toDoubleArray(),
+            FT.createAmplitudes(sequence, matrix).toDoubleArray(),
             expected,
             DELTA
         )
@@ -118,11 +118,10 @@ class FourierKtTest {
     fun testCreatePhases () {
         val amount=32
         val values = formValueSequence(amount){x->cos(2*x)+sin(5*x)}
-        val matrix = createDftMatrix(amount)
         val expected= doubleArrayOf(0.0, 0.0, 0.0, 0.0, 0.0, -1.57, 0.0, 0.0, 0.0, 0.0,
             0.0, 0.0, 0.0, 0.0, 0.0,0.0, 0.0, 0.0, 0.0, 0.0,0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,-1.57, 0.0, 0.0, 0.0, 0.0)
         assertEquals(
-            createPhases(values, matrix).toDoubleArray(),
+            FT.createPhases(values).toDoubleArray(),
             expected,
             DELTA
         )

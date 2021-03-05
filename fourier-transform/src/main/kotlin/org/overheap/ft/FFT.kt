@@ -6,7 +6,6 @@ import kotlin.math.PI
 import kotlin.math.cos
 import kotlin.math.sin
 
-
 fun main() {
     val amount=32
    // FFT.fft(formValueSequence(amount) { x -> cos(2 * x) + sin(5 * x) }.map { Complex(it, 0) }).println()
@@ -15,11 +14,16 @@ fun main() {
 }
 
 object FFT {
-    fun fft(vector: List<Complex>) = fftRecursive(vector)
+    fun fft(vector: List<Complex>): List<Complex> {
+        steps = 0
+        return fftRecursive(vector)
+    }
+
+    var steps = 0
 
     private fun fftRecursive(vector: List<Complex>): List<Complex> {
         val n = vector.size
-        if (n==1)
+        if (n < 2)
             return vector
 
         var (evens, odds) = vector.indices
@@ -30,7 +34,8 @@ object FFT {
         odds = fftRecursive(odds)
 
         val pairs = (0 until n / 2).map {
-            val w=Complex(cos(it*2*PI/n), sin(it*2*PI/n))
+            ++steps
+            val w = Complex(cos(it * 2 * PI / n), sin(it * 2 * PI / n))
             val offset = odds[it] * w
             val base = evens[it]
             listOf(base + offset, base - offset)
@@ -42,9 +47,9 @@ object FFT {
         return left.map { it.value } + right.map { it.value }
     }
 
-    fun ifft(vector: List<Complex>, amount:Int) : List<Double> {
-        val inverseVector=vector.map { it.conjugate }
-        return fft(inverseVector).map { it.re/amount }
+    fun ifft(vector: List<Complex>): List<Double> {
+        val inverseVector = vector.map { it.conjugate }
+        return fft(inverseVector).map { it.re / vector.size }
     }
 }
 
