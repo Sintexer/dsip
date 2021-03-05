@@ -11,7 +11,7 @@ fun main() {
     val amount=32
    // FFT.fft(formValueSequence(amount) { x -> cos(2 * x) + sin(5 * x) }.map { Complex(it, 0) }).println()
     println(formValueSequence(amount) { x -> cos(2 * x) + sin(5 * x) })
-    println(FFT.ifft(FFT.fft(formValueSequence(amount) { x -> cos(2 * x) + sin(5 * x) }.map { Complex(it, 0) }), amount))
+    //println(FFT.ifft(FFT.fft(formValueSequence(amount) { x -> cos(2 * x) + sin(5 * x) }.map { Complex(it, 0) }), amount))
 }
 
 object FFT {
