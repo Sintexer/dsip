@@ -1,39 +1,62 @@
 package org.overheap.ft
 
+import kscience.kmath.operations.Complex
+import kscience.kmath.operations.conjugate
 import kotlin.math.cos
 import kotlin.math.sin
 
 fun main() {
-    val amount=8
-    val matrix= createConvolutionMatrix(amount) { x -> cos (2* x) }
-    val vector= createConvolutionVector(amount){ x -> sin (5* x) }
-   println(createConvolutionResult(matrix, vector))
+    val amount = 4
+//    val vector = Convolution.createLinearConvolutionVector(amount) { x -> cos(2 * x) }
+//    val matrix = Convolution.createLinearConvolutionMatrix(amount) { x -> sin(5 * x) }
+//    val list = Convolution.createResult(matrix, vector)
+
+    val v=Convolution.createCyclicConvolutionVector(amount){ x -> cos(2 * x) }
+    val m=Convolution.createCyclicConvolutionMatrix(amount){ x -> sin(5 * x) }
+    println(Convolution.createResult(m,v))
+
+    val f1={x:Double -> cos(2 * x)}
+    println(Convolution.fftConvolution(amount, f1){ x -> sin(5 * x) })
 }
 
-fun createConvolutionMatrix(amount: Int, f: (Double) -> Double): List<List<Double>>{
-    val orderedValues = formValueSequence(amount, f)
-    return (0 until amount).map { i ->
-        (0 until amount).map { j ->
-            if (i + j >= amount) orderedValues[i + j-amount]
-            else orderedValues[i + j]
+object Convolution {
+
+//    fun createLinearConvolutionMatrix(amount: Int, f: (Double) -> Double): List<List<Double>> {
+//        val orderedValues = formValueSequence(amount, f).reversed() + List(amount - 1) { 0.0 }
+//        val size = orderedValues.size
+//        return (0 until size).map { i ->
+//            orderedValues.subList(size - i, size) + orderedValues.subList(0, size - i)
+//        }
+//    }
+//
+//    fun createLinearConvolutionVector(amount: Int, f: (Double) -> Double): List<Double> {
+//        return (List(amount - 1) { 0.0 } + formValueSequence(amount, f))
+//    }
+
+    fun createResult(matrix: List<List<Double>>, vector: List<Double>): List<Double> {
+        return multiply(matrix, vector)
+        //    .map { it / vector.size }
+    }
+
+
+    fun createCyclicConvolutionVector(amount: Int, f: (Double) -> Double): List<Double> {
+        val vector= formValueSequence(amount, f).toDoubleArray()
+        vector.reverse(1, amount)
+        return vector.toList()
+    }
+
+    fun createCyclicConvolutionMatrix(amount: Int, f: (Double) -> Double): List<List<Double>> {
+        val orderedValues = formValueSequence(amount, f)
+        val size = orderedValues.size
+        return (0 until size).map { i ->
+            orderedValues.toList().subList(i, size)+orderedValues.toList().subList(0, i)
         }
     }
-}
 
-fun createConvolutionVector(amount: Int, f: (Double) -> Double):List<Double> {
-    val list= formValueSequence(amount, f).toDoubleArray()
-    list.reverse(1, amount)
-    return list.toList()
-}
-
-fun createConvolutionResult(matrix:List<List<Double>>, vector: List<Double>):List<Double> {
-    return multiply(matrix, vector).map { it/vector.size }
-}
-
-fun multiply(matrix:List<List<Double>>, vector: List<Double>):List<Double> {
-    return (matrix.indices).map { i ->
-        vector.zip(matrix[i])
-            .map { pair -> pair.second * pair.first }
-            .fold(0.0, Double::plus)
+    fun fftConvolution(amount: Int, f1: (Double) -> Double, f2: (Double) -> Double): List<Double> {
+        val vector1= formValueSequence(amount, f1).map { Complex(it, 0) }
+        val vector2= formValueSequence(amount, f2).map { Complex(it, 0) }
+        return fftOperation(vector1, vector2)
     }
+
 }
