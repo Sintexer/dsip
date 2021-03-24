@@ -21,6 +21,10 @@ W
 'src/main/kotlin/org/overheap/ft/View.kt,4\b\4b1899cf19d23602f02311ba09c8788301859bfe
 X
 (src/main/kotlin/org/overheap/ft/Plots.kt,6\8\681927a3e600310447259b333ff65e591c918b6c
+<<<<<<< HEAD
+^
+.src/main/kotlin/org/overheap/ft/Correlation.kt,f\d\fd4f7e374672015d5feb4c46542e7323c4f5d47c
+=======
 A
 gradle.properties,2\a\2afbb999f001938c88fa43fc2ef52abf0f8213e4
 >
@@ -36,3 +40,4 @@ V
 &src/main/kotlin/org/overheap/ft/FFT.kt,4\1\417d1c7ef6e34b60bd3f5825c473853742b9ff58
 U
 %src/main/kotlin/org/overheap/ft/FT.kt,3\b\3b705a0a19ac218367de70be7166c1262a6868d7
+>>>>>>> 78cd07e4d5c824976524b7b424a85b54a1239126

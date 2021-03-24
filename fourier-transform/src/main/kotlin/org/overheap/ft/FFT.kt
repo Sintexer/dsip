@@ -6,6 +6,13 @@ import kotlin.math.PI
 import kotlin.math.cos
 import kotlin.math.sin
 
+fun main() {
+    val amount=32
+   // FFT.fft(formValueSequence(amount) { x -> cos(2 * x) + sin(5 * x) }.map { Complex(it, 0) }).println()
+    println(formValueSequence(amount) { x -> cos(2 * x) + sin(5 * x) })
+    //println(FFT.ifft(FFT.fft(formValueSequence(amount) { x -> cos(2 * x) + sin(5 * x) }.map { Complex(it, 0) }), amount))
+}
+
 object FFT {
     fun fft(vector: List<Complex>): List<Complex> {
         steps = 0
