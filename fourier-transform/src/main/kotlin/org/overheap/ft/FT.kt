@@ -37,7 +37,6 @@ object FT {
 
     fun multiply(sequence: List<Complex>, matrix: List<List<Complex>>): List<Complex> {
         return (matrix.indices).map { i ->
-//            ++steps
             sequence.zip(matrix[i])
                 .map { pair -> pair.second * pair.first }
                 .fold(Complex(0, 0), ComplexField::add)

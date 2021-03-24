@@ -20,12 +20,20 @@ fun Iterable<*>.println() = println(joinToString(prefix = "[", postfix = "]"))
 fun main() {
     embeddedServer(Netty, port = 8080) {
         routing {
-            get("/") {
+            get("/lab1") {
                 call.respond(
                     TextContent(
                         createPlotsPage(32) { x ->
                             cos(2 * x) + sin(5 * x)
                         },
+                        ContentType.Text.Html
+                    )
+                )
+            }
+            get("/lab2"){
+                call.respond(
+                    TextContent(
+                        createPlotsPage2(32),
                         ContentType.Text.Html
                     )
                 )

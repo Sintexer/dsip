@@ -7,9 +7,6 @@ import kotlin.math.sin
 
 fun main() {
     val amount = 4
-//    val vector = Convolution.createLinearConvolutionVector(amount) { x -> cos(2 * x) }
-//    val matrix = Convolution.createLinearConvolutionMatrix(amount) { x -> sin(5 * x) }
-//    val list = Convolution.createResult(matrix, vector)
 
     val v=Convolution.createCyclicConvolutionVector(amount){ x -> cos(2 * x) }
     val m=Convolution.createCyclicConvolutionMatrix(amount){ x -> sin(5 * x) }
@@ -20,18 +17,6 @@ fun main() {
 }
 
 object Convolution {
-
-//    fun createLinearConvolutionMatrix(amount: Int, f: (Double) -> Double): List<List<Double>> {
-//        val orderedValues = formValueSequence(amount, f).reversed() + List(amount - 1) { 0.0 }
-//        val size = orderedValues.size
-//        return (0 until size).map { i ->
-//            orderedValues.subList(size - i, size) + orderedValues.subList(0, size - i)
-//        }
-//    }
-//
-//    fun createLinearConvolutionVector(amount: Int, f: (Double) -> Double): List<Double> {
-//        return (List(amount - 1) { 0.0 } + formValueSequence(amount, f))
-//    }
 
     fun createResult(matrix: List<List<Double>>, vector: List<Double>): List<Double> {
         return multiply(matrix, vector)
