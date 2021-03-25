@@ -39,3 +39,38 @@ fun createPlotsPage(precision: Int, function: (Double) -> Double): String {
     ggsave(createBunch(plots), "plot.html", path = "plots")
     return File("plots/plot.html").readText()
 }
+
+fun createPlotsPage2(amount: Int): String {
+
+    val points = (0 until amount)
+    val v=Convolution.createCyclicConvolutionVector(amount){ x -> cos(2 * x) }
+    val m=Convolution.createCyclicConvolutionMatrix(amount){ x -> sin(5 * x) }
+    val matrix = Correlation.createCorrelationMatrix(amount) { x -> cos(2 * x) }
+    val vector = Correlation.createCorrelationVector(amount) { x -> sin(5 * x) }
+
+    val f1={x:Double -> cos(2 * x)}
+    val plot1= Convolution.createResult(m,v)
+    val plot2 = Convolution.fftConvolution(amount, f1){ x -> sin(5 * x) }
+
+    val f2={x:Double -> cos(2 * x)}
+    val plot3 = Correlation.createCorrelationResult(matrix, vector)
+    val plot4 = Correlation.fftCorrelation(amount, f2){ x -> sin(5 * x) }
+
+    val plots = listOf(
+        createPlot(points, plot1) +
+                labs(title = "Source", x = "t", y = "F(t)"),
+
+        createPlot(points, plot2) +
+                labs(title = "Source", x = "t", y = "F(t)"),
+
+        createPlot(points, plot3) +
+                labs(title = "Source", x = "t", y = "F(t)"),
+
+        createPlot(points, plot4) +
+                labs(title = "Source", x = "t", y = "F(t)"),
+
+    )
+
+    ggsave(createBunch(plots), "plot2.html", path = "plots")
+    return File("plots/plot2.html").readText()
+}

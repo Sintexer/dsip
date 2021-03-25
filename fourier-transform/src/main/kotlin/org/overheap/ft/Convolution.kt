@@ -5,7 +5,8 @@ import kotlin.math.cos
 import kotlin.math.sin
 
 fun main() {
-    val amount = 32
+    val amount = 8
+
 
     val v = Convolution.createCyclicConvolutionVector(amount) { x -> cos(2 * x) }
     val m = Convolution.createCyclicConvolutionMatrix(amount) { x -> sin(5 * x) }
