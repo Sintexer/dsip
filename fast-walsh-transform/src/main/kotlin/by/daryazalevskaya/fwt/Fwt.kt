@@ -5,7 +5,7 @@ import kotlin.math.*
 
 object Fwt {
 
-    fun formValueSequence(amount: Int, f: (Double) -> Double) = (0 until amount).map { f(it * 2 * PI / amount) }
+    fun formFunctionValues(amount: Int, f: (Double) -> Double) = (0 until amount).map { f(it * 2 * PI / amount) }
 
     fun buildFwt(values: List<Double>): List<Double> {
         var result = values.toMutableList()
@@ -25,5 +25,6 @@ object Fwt {
 }
 
 fun main() {
-    print(Fwt.buildFwt(Fwt.formValueSequence(32) { x -> cos(2 * x) + sin(5 * x) }))
+    val n = 8
+    Plots.createPlotsPage(n) { x -> cos(2 * x) + sin(5 * x) }
 }
