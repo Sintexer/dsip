@@ -24,7 +24,7 @@ fun main() {
                 call.respond(
                     TextContent(
                         createPlotsPage(32) { x ->
-                            cos(2 * x) + sin(5 * x)
+                            sin(5 * x)
                         },
                         ContentType.Text.Html
                     )
