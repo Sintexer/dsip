@@ -1,5 +1,6 @@
 plugins {
     id 'org.jetbrains.kotlin.jvm' version '1.5.10'
+    id("org.openjfx.javafxplugin") version "0.0.10"
 }
 
 group 'org.example'
@@ -10,6 +11,17 @@ repositories {
 }
 
 dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:1.5.10"
     implementation files('D:/Program Files/opencv/build/java/opencv-453.jar')
+    implementation("org.nield:kotlin-statistics:1.2.1")
+    implementation("no.tornado:tornadofx:1.7.20")
+}
+
+javafx {
+    version = "12"
+    modules("javafx.controls", "javafx.fxml")
+}
+
+compileKotlin {
+    kotlinOptions.jvmTarget= 11
 }
