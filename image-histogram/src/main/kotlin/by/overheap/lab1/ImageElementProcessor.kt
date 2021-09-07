@@ -16,8 +16,8 @@ class ImageElementProcessor {
     fun toNegative(src: Mat): Mat {
 
         val negativeMat = Mat(src.rows(), src.cols(), src.type())
-        val negativeArr = IntArray(src.channels() * src.rows() * src.cols())
-        negativeArr.map { 255 - it }
+        var negativeArr = IntArray(src.channels() * src.rows() * src.cols())
+        negativeArr = negativeArr.map { 255 - it }.toIntArray()
         negativeMat.put(0, 0, negativeArr)
         return negativeMat
     }
@@ -34,8 +34,54 @@ class ImageElementProcessor {
         }
     }
 
-//    fun minFilter(src: Mat) : Mat {
-//
-//
-//    }
+    fun minFilter(src: Mat): Mat {
+
+        val matChannels = mutableListOf<Mat>()
+        Core.split(src, matChannels)
+        matChannels.forEach {
+
+            for (i in 1 until it.rows() - 1) {
+                for (j in 1 until it.cols() - 1) {
+                    val neighbours = arrayOf(
+                        it.get(i - 1, j - 1)[0], it.get(i - 1, j)[0], it.get(i - 1, j + 1)[0],
+                        it.get(i, j - 1)[0], it.get(i, j)[0], it.get(i, j + 1)[0],
+                        it.get(i + 1, j)[0], it.get(i + 1, j)[0], it.get(i, j + 1)[0]
+                    )
+                    it.put(i, j, neighbours.minOrNull()!!)
+                }
+            }
+        }
+
+        Core.merge(matChannels, src)
+        return src
+    }
+
+    fun maxFilter(src: Mat): Mat {
+
+        val matChannels = mutableListOf<Mat>()
+        Core.split(src, matChannels)
+        matChannels.forEach {
+
+            for (i in 1 until it.rows() - 1) {
+                for (j in 1 until it.cols() - 1) {
+                    val neighbours = arrayOf(
+                        it.get(i - 1, j - 1)[0], it.get(i - 1, j)[0], it.get(i - 1, j + 1)[0],
+                        it.get(i, j - 1)[0], it.get(i, j)[0], it.get(i, j + 1)[0],
+                        it.get(i + 1, j)[0], it.get(i + 1, j)[0], it.get(i, j + 1)[0]
+                    )
+                    it.put(i, j, neighbours.maxOrNull()!!)
+                }
+            }
+        }
+
+        Core.merge(matChannels, src)
+        return src
+    }
+
+    fun maxMinFilter(src : Mat) : Mat {
+
+        val mins = minFilter(src)
+        return maxFilter(mins)
+    }
+
 }
