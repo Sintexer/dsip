@@ -27,15 +27,10 @@ class ImageElementProcessor {
         val matChannels = mutableListOf<Mat>()
         Core.split(src, matChannels)
         return matChannels.map { channel ->
-            channel
-                .get(0, 0)
-                .toList()
-                .map { it.toInt() }
+            val pixels = ByteArray(channel.rows()*channel.cols())
+            channel.get(0, 0, pixels)
+            pixels.map{ it.toUByte().toInt() }
         }
     }
 
-//    fun minFilter(src: Mat) : Mat {
-//
-//
-//    }
 }

@@ -1,15 +1,21 @@
 package by.overheap.lab1.view
 
 import by.overheap.lab1.controller.ImageController
+import by.overheap.lab1.histogram.createHistogramColumns
 import javafx.geometry.Pos
 import javafx.scene.chart.CategoryAxis
 import javafx.scene.chart.NumberAxis
 import javafx.scene.chart.XYChart
+import javafx.scene.paint.Color
 import tornadofx.*
+import java.io.File
 
 class HistogramsView : View() {
 
     val controller: ImageController by inject()
+
+    val xAxis = CategoryAxis()
+    val yAxis = NumberAxis()
 
     val redHistogramData = mutableListOf<XYChart.Data<String, Number>>().asObservable()
     val greenHistogramData = mutableListOf<XYChart.Data<String, Number>>().asObservable()
@@ -19,37 +25,63 @@ class HistogramsView : View() {
     val processedGreenHistogramData = mutableListOf<XYChart.Data<String, Number>>().asObservable()
     val processedBlueHistogramData = mutableListOf<XYChart.Data<String, Number>>().asObservable()
 
-    override val root = vbox(20, alignment = Pos.BASELINE_CENTER) {
-        spacer {  }
+    override val root = vbox(20, alignment = Pos.CENTER) {
+        prefHeight = 800.0
+        spacer { }
         button("Choose file").action {
-            chooseFile(filters = arrayOf()).forEach{println(it)}
+            val file = chooseFile(filters = arrayOf()).first()
+            processImage(file)
         }
-        label("Brightness before")
-        hbox {
-            barchart("R", CategoryAxis(), NumberAxis()) {
-                series("", redHistogramData)
-            }
-            barchart("G", CategoryAxis(), NumberAxis()) {
-                series("", greenHistogramData)
-            }
-            barchart("B", CategoryAxis(), NumberAxis()) {
-                series("", blueHistogramData)
+        scrollpane {
+            hbox {
+                vbox(alignment = Pos.CENTER) {
+                    label("Before")
+                    barchart("R", CategoryAxis(), NumberAxis()) {
+                        series("Brightness", redHistogramData)
+                        minWidth = 920.0
+                        animated = false
+                    }
+                    barchart("G", CategoryAxis(), NumberAxis()) {
+                        series("Brightness", greenHistogramData)
+                        minWidth = 920.0
+                        animated = false
+                    }
+                    barchart("B", CategoryAxis(), NumberAxis()) {
+                        series("Brightness", blueHistogramData)
+                        minWidth = 920.0
+                        animated = false
+                    }
+                }
+                vbox(alignment = Pos.CENTER) {
+                    barchart("R", CategoryAxis(), NumberAxis()) {
+                        series("Brightness", processedRedHistogramData)
+                        minWidth = 920.0
+                        animated = false
+                    }
+                    barchart("G", CategoryAxis(), NumberAxis()) {
+                        series("Brightness", processedGreenHistogramData)
+                        minWidth = 920.0
+                        animated = false
+                    }
+                    barchart("B", CategoryAxis(), NumberAxis()) {
+                        series("Brightness", processedBlueHistogramData)
+                        minWidth = 920.0
+                        animated = false
+                    }
+                }
+
             }
         }
-        label("Brightness after")
-        hbox {
-            barchart("R", CategoryAxis(), NumberAxis()) {
-                series("", processedRedHistogramData)
-            }
-            barchart("G", CategoryAxis(), NumberAxis()) {
-                series("", processedGreenHistogramData)
-            }
-            barchart("B", CategoryAxis(), NumberAxis()) {
-                series("", processedBlueHistogramData)
-            }
-        }
+
     }
 
+    private fun processImage(file: File) {
+        val imageData = controller.processImage(file)
+        redHistogramData.setAll(createHistogramColumns(imageData.redPixels).map { it.toChartData() })
+        greenHistogramData.setAll(createHistogramColumns(imageData.greenPixels).map { it.toChartData() })
+        blueHistogramData.setAll(createHistogramColumns(imageData.bluePixels).map { it.toChartData() })
+    }
 
+    private fun Map.Entry<Int, Int>.toChartData() = XYChart.Data<String, Number>(key.toString(), value)
 
 }
