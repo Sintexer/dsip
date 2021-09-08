@@ -10,8 +10,10 @@ class ImageController : Controller() {
     fun processImage(imageFile: File): ImageData {
         val imageMatrix = Imgcodecs.imread(imageFile.path)
         val imageChannels = ImageElementProcessor().channelDivider(imageMatrix)
-        val (reds, greens, blues) = imageChannels
-        return ImageData(reds, greens, blues, listOf(), listOf(), listOf())
+        val (blues, greens, reds) = imageChannels
+        return ImageData(
+            source = PixelsData(reds, greens, blues)
+        )
     }
 
 }
