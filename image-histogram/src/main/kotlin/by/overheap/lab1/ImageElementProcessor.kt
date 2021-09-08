@@ -37,7 +37,6 @@ class ImageElementProcessor {
         return matChannels.map { channel ->
             val pixels = ByteArray(channel.rows() * channel.cols())
             channel.get(0, 0, pixels)
-            //pixels.forEach { println(it) }
             pixels.map { it.toUByte().toInt() }
 
         }
@@ -60,7 +59,6 @@ class ImageElementProcessor {
     }
 
     private fun filterByLambdaResult(src: Mat, f: (DoubleArray) -> Double): Mat {
-
         val srcChannels = mutableListOf<Mat>()
         Core.split(src, srcChannels)
 
@@ -70,7 +68,6 @@ class ImageElementProcessor {
         Core.split(dst, dstChannels)
 
         srcChannels.forEachIndexed { index, mat ->
-
             for (i in 1 until mat.rows() - 1) {
                 for (j in 1 until mat.cols() - 1) {
                     val neighbours = arrayOf(
