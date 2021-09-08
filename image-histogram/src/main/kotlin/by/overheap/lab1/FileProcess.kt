@@ -1,6 +1,7 @@
 package by.overheap.lab1
 
 import org.opencv.core.Mat
+import org.opencv.imgcodecs.Imgcodecs
 import java.awt.image.BufferedImage
 import java.io.File
 import java.io.IOException
@@ -9,6 +10,10 @@ import javax.imageio.ImageIO
 class FileProcess {
 
     val jpg = "jpg"
+
+    fun readMat(path: String): Mat {
+        return Imgcodecs.imread(path)
+    }
 
     @Throws(IOException::class)
     fun write(bufferedImage: BufferedImage?, filename: String?) {
