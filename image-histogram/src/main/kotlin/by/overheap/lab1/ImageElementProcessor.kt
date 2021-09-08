@@ -6,6 +6,13 @@ import org.opencv.imgproc.Imgproc
 
 class ImageElementProcessor {
 
+    fun toGrey(mat: Mat): Mat {
+
+        val grey = Mat()
+        Imgproc.cvtColor(mat, grey, Imgproc.COLOR_BGR2GRAY)
+        return grey
+    }
+
     fun toBlackWhite(src: Mat): Mat {
 
         val blackWhiteMat = Mat()
@@ -17,7 +24,7 @@ class ImageElementProcessor {
 
         val negativeMat = Mat(src.rows(), src.cols(), src.type())
         var negativeArr = ByteArray(src.channels() * src.rows() * src.cols())
-        src.get(0,0, negativeArr)
+        src.get(0, 0, negativeArr)
         negativeArr = negativeArr.map { (255 - it).toByte() }.toByteArray()
         negativeMat.put(0, 0, negativeArr)
         return negativeMat
@@ -54,25 +61,32 @@ class ImageElementProcessor {
 
     private fun filterByLambdaResult(src: Mat, f: (DoubleArray) -> Double): Mat {
 
-        val matChannels = mutableListOf<Mat>()
-        Core.split(src, matChannels)
-        matChannels.forEach {
+        val srcChannels = mutableListOf<Mat>()
+        Core.split(src, srcChannels)
 
-            for (i in 1 until it.rows() - 1) {
-                for (j in 1 until it.cols() - 1) {
+        val dstChannels = mutableListOf<Mat>()
+        val dst = Mat()
+        src.copyTo(dst)
+        Core.split(dst, dstChannels)
+
+        srcChannels.forEachIndexed { index, mat ->
+
+            for (i in 1 until mat.rows() - 1) {
+                for (j in 1 until mat.cols() - 1) {
                     val neighbours = arrayOf(
-                        it.get(i - 1, j - 1)[0], it.get(i - 1, j)[0], it.get(i - 1, j + 1)[0],
-                        it.get(i, j - 1)[0], it.get(i, j)[0], it.get(i, j + 1)[0],
-                        it.get(i + 1, j)[0], it.get(i + 1, j)[0], it.get(i, j + 1)[0]
+                        mat.get(i - 1, j - 1)[0], mat.get(i - 1, j)[0], mat.get(i - 1, j + 1)[0],
+                        mat.get(i, j - 1)[0], mat.get(i, j)[0], mat.get(i, j + 1)[0],
+                        mat.get(i + 1, j - 1)[0], mat.get(i + 1, j)[0], mat.get(i + 1, j + 1)[0]
                     ).toDoubleArray()
+
                     val lambdaResult = f(neighbours)
-                    it.put(i, j, lambdaResult)
+                    dstChannels[index].put(i, j, lambdaResult)
                 }
             }
         }
 
-        Core.merge(matChannels, src)
-        return src
+        Core.merge(dstChannels, dst)
+        return dst
     }
 
 }
